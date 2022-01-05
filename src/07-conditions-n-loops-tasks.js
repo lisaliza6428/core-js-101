@@ -27,8 +27,17 @@
  *  21 => 'Fizz'
  *
  */
-function getFizzBuzz(/* num */) {
-  throw new Error('Not implemented');
+function getFizzBuzz(num) {
+  if (num % 3 === 0 && num % 5 === 0) {
+    return 'FizzBuzz';
+  }
+  if (num % 3 === 0) {
+    return 'Fizz';
+  }
+  if (num % 5 === 0) {
+    return 'Buzz';
+  }
+  return num;
 }
 
 
@@ -276,8 +285,15 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  const rec = (n) => {
+    if (String(n).length === 1) {
+      return n;
+    }
+    const c = String(n).split('').map((x) => +x).reduce((a, b) => a + b, 0);
+    return rec(c);
+  };
+  return rec(num);
 }
 
 
@@ -302,8 +318,27 @@ function getDigitalRoot(/* num */) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const stack = [];
+  const map = {
+    ']': '[',
+    ')': '(',
+    '>': '<',
+    '}': '{',
+
+  };
+  // if (Object.keys(map))
+  for (let i = 0; i < str.length; i += 1) {
+    const current = str[i];
+    if (Object.keys(map).includes(current)) {
+      if (stack.pop() !== map[current]) {
+        return false;
+      }
+    } else {
+      stack.push(current);
+    }
+  }
+  return stack.length === 0;
 }
 
 
