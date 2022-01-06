@@ -165,8 +165,8 @@ function doRectanglesOverlap(/* rect1, rect2 */) {
  *   { center: { x:0, y:0 }, radius:10 },  { x:10, y:10 }   => false
  *
  */
-function isInsideCircle(/* circle, point */) {
-  throw new Error('Not implemented');
+function isInsideCircle(circle, point) {
+  return ((point.x - circle.center.x) ** 2 + (point.y - circle.center.y) ** 2) < circle.radius ** 2;
 }
 
 
@@ -181,8 +181,21 @@ function isInsideCircle(/* circle, point */) {
  *   'abracadabra'  => 'c'
  *   'entente' => null
  */
-function findFirstSingleChar(/* str */) {
-  throw new Error('Not implemented');
+function findFirstSingleChar(str) {
+  const obj = str.split('').reduce((acc, i) => {
+    if (!acc[i]) {
+      acc[i] = 1;
+    } else {
+      acc[i] += 1;
+    }
+    return acc;
+  }, {});
+  for (let x = 0; x < Object.values(obj).length; x += 1) {
+    if (Object.values(obj)[x] === 1) {
+      return Object.keys(obj)[x];
+    }
+  }
+  return null;
 }
 
 
@@ -208,8 +221,19 @@ function findFirstSingleChar(/* str */) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  let l = '(';
+  if (isStartIncluded === true) {
+    l = '[';
+  }
+  let r = ')';
+  if (isEndIncluded === true) {
+    r = ']';
+  }
+  if (a < b) {
+    return `${l}${a}, ${b}${r}`;
+  }
+  return `${l}${b}, ${a}${r}`;
 }
 
 
@@ -225,8 +249,8 @@ function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  return str.split('').reverse().join('');
 }
 
 
@@ -327,7 +351,6 @@ function isBracketsBalanced(str) {
     '}': '{',
 
   };
-  // if (Object.keys(map))
   for (let i = 0; i < str.length; i += 1) {
     const current = str[i];
     if (Object.keys(map).includes(current)) {
